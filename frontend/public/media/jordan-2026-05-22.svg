@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Synthetic illustration: a home training corner with a yoga mat, two dumbbells and one kettlebell">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e4dc"/><stop offset="1" stop-color="#ddd6cb"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b98b5e"/><stop offset="1" stop-color="#9c7148"/></linearGradient>
+  </defs>
+  <rect width="400" height="185" fill="url(#wall)"/>
+  <rect x="260" y="30" width="96" height="80" rx="3" fill="#cfe3ea" stroke="#f7f5f0" stroke-width="6"/>
+  <line x1="308" y1="30" x2="308" y2="110" stroke="#f7f5f0" stroke-width="4"/>
+  <rect y="185" width="400" height="115" fill="url(#floor)"/>
+  <g stroke="#8a6440" stroke-width="1.2" opacity=".55"><line x1="0" y1="215" x2="400" y2="215"/><line x1="0" y1="250" x2="400" y2="250"/><line x1="0" y1="285" x2="400" y2="285"/>
+    <line x1="90" y1="185" x2="80" y2="215"/><line x1="230" y1="215" x2="220" y2="250"/><line x1="140" y1="250" x2="128" y2="285"/><line x1="330" y1="185" x2="324" y2="215"/></g>
+  <path d="M40 270 L110 200 L330 200 L380 270 Z" fill="#3f8f87"/>
+  <path d="M40 270 L380 270 L380 278 L40 278 Z" fill="#2e6e68"/>
+  <g transform="translate(120 222)">
+    <rect x="0" y="6" width="58" height="8" rx="3" fill="#6b7177"/>
+    <rect x="-6" y="-4" width="16" height="28" rx="4" fill="#2b2f33"/><rect x="48" y="-4" width="16" height="28" rx="4" fill="#2b2f33"/>
+  </g>
+  <g transform="translate(138 246)">
+    <rect x="0" y="6" width="58" height="8" rx="3" fill="#6b7177"/>
+    <rect x="-6" y="-4" width="16" height="28" rx="4" fill="#2b2f33"/><rect x="48" y="-4" width="16" height="28" rx="4" fill="#2b2f33"/>
+  </g>
+  <g transform="translate(262 196)">
+    <path d="M14 22 C14 4 50 4 50 22" fill="none" stroke="#2b2f33" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="32" cy="50" rx="30" ry="28" fill="#2b2f33"/>
+    <ellipse cx="22" cy="40" rx="8" ry="6" fill="#4a5056"/>
+  </g>
+  <rect x="8" y="8" width="150" height="20" rx="4" fill="#1c2833" opacity=".7"/>
+  <text x="16" y="22" font-family="system-ui, sans-serif" font-size="11" fill="#fff">Synthetic image · not a real photo</text>
+</svg>

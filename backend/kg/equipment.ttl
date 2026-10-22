@@ -1,0 +1,31 @@
+# Equipment concept graph (D4). Catalog equipment nodes are created by
+# ingestion from exercises.json labels (fce:<slug>); this file adds the
+# structure the filter traverses:
+#   skos:broader      family hierarchy   ("no barbell" removes the family)
+#   fc:provides       capability         (an adjustable bench gives flat/incline/decline)
+#   skos:closeMatch   near-synonym       (counts as available, flagged in the trace)
+#   fc:Ambient        always available   (wall, floor)
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fce:  <https://example.org/future-coach/kg/equipment/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+fce:barbell-family a fc:EquipmentFamily ; skos:prefLabel "barbell (any)" ; skos:altLabel "barbells", "bar" .
+fce:barbell  skos:broader fce:barbell-family ; skos:altLabel "straight bar", "olympic bar" .
+fce:ez-bar   skos:broader fce:barbell-family ; skos:altLabel "curl bar" .
+fce:trap-bar a fc:Equipment ; skos:prefLabel "Trap Bar" ; skos:altLabel "hex bar" ; skos:broader fce:barbell-family .
+
+fce:dumbbell   skos:altLabel "dumbbells", "DB", "DBs", "dumbells" ; fc:defaultQuantity 2 .
+fce:kettlebell skos:altLabel "kettlebells", "KB", "KBs", "kettle bell" ; fc:defaultQuantity 1 .
+
+fce:adjustable-bench a fc:Equipment ; skos:prefLabel "Adjustable Bench" ;
+    fc:provides fce:adjustable-bench-incline, fce:adjustable-bench-decline, fce:flat-bench .
+fce:flat-bench skos:altLabel "bench", "weight bench" ;
+    fc:provides fce:box .   # a bench works as a box for box squats and step-ups
+fce:box skos:altLabel "plyo box", "step", "sturdy box" .
+
+fce:resistance-band-loop skos:altLabel "loop band", "mini band", "resistance band", "band", "bands" ;
+    skos:closeMatch fce:miniband .
+fce:yoga-mat skos:altLabel "mat", "exercise mat" .
+
+fce:wall  a fc:Ambient .
+fce:floor a fc:Equipment, fc:Ambient ; skos:prefLabel "Floor" ; skos:closeMatch fce:yoga-mat .

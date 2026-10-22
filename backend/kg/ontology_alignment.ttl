@@ -1,0 +1,69 @@
+# Alignment of our concepts to EXMO, the Exercise Medicine Ontology (D7). CC BY 4.0.
+# Every IRI below was checked against the EXMO release on GitHub
+# (Exercise-Medicine-Ontology/EXMO, exmo.owl): it exists, has the label in the comment,
+# and is not deprecated. Checked 2026-10-16. Anything EXMO lacks (PFP, LBP, our load types,
+# the stresses/contraindication relations) stays our own term with no mapping.
+#
+#   skos:exactMatch  same concept
+#   skos:closeMatch  near enough to interchange for search, not for logic
+#   skos:broadMatch  the EXMO concept is broader than ours
+# The safety filter never reads these: equipment closeMatch expansion only follows
+# links between our own equipment nodes (safety/filter.py).
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fce:  <https://example.org/future-coach/kg/equipment/> .
+@prefix fcp:  <https://example.org/future-coach/kg/pattern/> .
+@prefix fcc:  <https://example.org/future-coach/kg/condition/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix obo:  <http://purl.obolibrary.org/obo/> .
+
+# --- classes ---------------------------------------------------------------
+fc:Exercise  skos:closeMatch obo:NCIT_C16567 .   # Exercise
+fc:Equipment skos:closeMatch obo:EXMO_0000013 .  # exercise equipment
+
+# --- equipment ---------------------------------------------------------------
+fce:barbell              skos:exactMatch obo:EXMO_0000221 .  # barbell
+fce:dumbbell             skos:exactMatch obo:EXMO_0000225 .  # dumbbell
+fce:kettlebell           skos:exactMatch obo:EXMO_0000228 .  # kettlebell
+fce:pull-up-bar          skos:exactMatch obo:EXMO_0000231 .  # pull-up bar
+fce:medicine-ball        skos:exactMatch obo:EXMO_0000230 .  # medicine ball
+fce:stability-ball       skos:exactMatch obo:EXMO_0000233 .  # stability ball
+fce:jump-rope            skos:exactMatch obo:EXMO_0000199 .  # jump rope
+fce:suspension-trainer   skos:closeMatch obo:EXMO_0000234 .  # TRX suspension trainer (a brand)
+fce:flat-bench           skos:closeMatch obo:EXMO_0000222 .  # bench
+fce:adjustable-bench     skos:closeMatch obo:EXMO_0000222 .  # bench
+fce:resistance-band-loop skos:broadMatch obo:EXMO_0000232 .  # resistance band
+fce:resistance-band-with-handles skos:broadMatch obo:EXMO_0000232 .  # resistance band
+fce:seated-lat-pulldown-machine  skos:broadMatch obo:EXMO_0000235 .  # weight machine
+fce:chest-supported-row-machine  skos:broadMatch obo:EXMO_0000235 .
+fce:horizontal-leg-press-machine skos:broadMatch obo:EXMO_0000235 .
+fce:cable-resistance-machine     skos:broadMatch obo:EXMO_0000235 .
+
+# --- movement patterns (exercise types) ----------------------------------------
+fcp:cardio-plyometric skos:exactMatch obo:EXMO_0000125 .  # jumping exercise
+fcp:isometric         skos:exactMatch obo:NCIT_C21057 .   # Isometric Exercise
+fcp:lower-push-squat  skos:closeMatch obo:NCIT_C192423 .  # Squatting
+fcp:balance           skos:closeMatch obo:EXMO_0000383 .  # balance training
+fcp:mobility-dynamic  skos:closeMatch obo:EXMO_0000119 .  # joint mobility exercise
+fcp:car               skos:closeMatch obo:EXMO_0000352 .  # range of motion exercise
+fcp:mobility-static   skos:closeMatch obo:EXMO_0000131 .  # flexibility exercise
+fcp:cardio            skos:broadMatch obo:NCIT_C39774 .   # Aerobic Exercise
+fcp:cardio-locomotion skos:broadMatch obo:NCIT_C39774 .
+fcp:core-anti-extension       skos:broadMatch obo:EXMO_0000124 .  # core training
+fcp:core-anti-lateral-flexion skos:broadMatch obo:EXMO_0000124 .
+fcp:core-anti-rotation        skos:broadMatch obo:EXMO_0000124 .
+fcp:core-flexion              skos:broadMatch obo:EXMO_0000124 .
+fcp:core-extension            skos:broadMatch obo:EXMO_0000124 .
+fcp:core-rotation             skos:broadMatch obo:EXMO_0000124 .
+fcp:lower-push-lunge          skos:broadMatch obo:EXMO_0000123 .  # lower limb strength training
+fcp:lower-push-split-squat    skos:broadMatch obo:EXMO_0000123 .
+fcp:lower-push-step-up        skos:broadMatch obo:EXMO_0000123 .
+fcp:lower-pull-hinge          skos:broadMatch obo:EXMO_0000123 .
+fcp:lower-pull-hip-lift       skos:broadMatch obo:EXMO_0000123 .
+fcp:lower-push-calf-raise     skos:broadMatch obo:EXMO_0000123 .
+fcp:upper-push-horizontal     skos:broadMatch obo:EXMO_0000396 .  # muscle-strengthening activity
+fcp:upper-push-vertical       skos:broadMatch obo:EXMO_0000396 .
+fcp:upper-pull-horizontal     skos:broadMatch obo:EXMO_0000396 .
+fcp:upper-pull-vertical       skos:broadMatch obo:EXMO_0000396 .
+
+# --- conditions ----------------------------------------------------------------
+fcc:rc-tendinopathy skos:broadMatch obo:EXMO_0000361 .  # rotator cuff injury

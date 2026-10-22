@@ -1,0 +1,1332 @@
+{
+  "_note": "Synthetic, fictional sample member for the take-home. No real person or PHI. Use only as seed data. Extended with synthetic history by scripts/generate_synthetic.py; provided values are unchanged.",
+  "profile": {
+    "id": "mbr_01HX9JORDAN",
+    "name": "Jordan Rivera",
+    "age": 41,
+    "sex": "female",
+    "height_cm": 168,
+    "weight_kg": 71.2,
+    "timezone": "America/Los_Angeles",
+    "member_since": "2024-09-15",
+    "coach_id": "coach_01HXSAM",
+    "tier": "1:1 Coaching",
+    "pronouns": "she/her"
+  },
+  "goals": [
+    {
+      "id": "goal_strength",
+      "text": "Build lower-body strength",
+      "priority": 1,
+      "target_date": "2026-09-01"
+    },
+    {
+      "id": "goal_knee",
+      "text": "Return to pain-free squatting after left-knee flare-up",
+      "priority": 1,
+      "target_date": "2026-07-15"
+    },
+    {
+      "id": "goal_sleep",
+      "text": "Average 7+ hours of sleep on weeknights",
+      "priority": 2,
+      "target_date": null
+    }
+  ],
+  "preferences": {
+    "preferred_session_minutes": 50,
+    "training_days_per_week": 4,
+    "preferred_days": [
+      "Mon",
+      "Wed",
+      "Thu",
+      "Sat"
+    ],
+    "dislikes": [
+      "Deadlift",
+      "Burpees"
+    ],
+    "notes": "Prefers dumbbell and kettlebell work; trains at home. Dislikes high-impact jumping."
+  },
+  "equipment_available": [
+    "Dumbbell",
+    "Kettlebell",
+    "Yoga Mat",
+    "Resistance Band - Loop",
+    "Flat Bench"
+  ],
+  "injuries": [
+    {
+      "id": "inj_knee_left",
+      "region": "left knee",
+      "joint": "knee",
+      "status": "recovering",
+      "severity": "mild",
+      "since": "2026-05-10",
+      "notes": "Patellofemoral pain after a hiking trip. Cleared for low-impact loading; avoid deep knee flexion under load and plyometrics.",
+      "snomedct_hint": "Look up patellofemoral pain syndrome / knee joint structures in SNOMED CT via NCI EVS."
+    }
+  ],
+  "workout_history": [
+    {
+      "date": "2026-06-04",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": null,
+      "duration_min": null,
+      "rpe": null,
+      "exercises": [],
+      "status": "scheduled_today"
+    },
+    {
+      "date": "2026-06-03",
+      "title": "Lower Body - Bands & DB",
+      "planned": true,
+      "completed": true,
+      "duration_min": 28,
+      "rpe": 6,
+      "exercises": [
+        "Goblet Squat (box-supported)",
+        "Hip Thrust",
+        "Banded Lateral Walk"
+      ]
+    },
+    {
+      "date": "2026-06-01",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 31,
+      "rpe": 7,
+      "exercises": [
+        "DB Floor Press",
+        "Half-Kneeling DB Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "title": "Full Body",
+      "planned": true,
+      "completed": false,
+      "duration_min": 0,
+      "rpe": null,
+      "exercises": []
+    },
+    {
+      "date": "2026-05-28",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 30,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press"
+      ]
+    },
+    {
+      "date": "2026-05-27",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 26,
+      "rpe": 6,
+      "exercises": [
+        "Step-Up",
+        "KB Romanian Deadlift",
+        "Wall Sit"
+      ]
+    },
+    {
+      "date": "2026-05-25",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 36,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-23",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 41,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-05-21",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 42,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-20",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 36,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Box Squat",
+        "Dumbbell Hip Thrust",
+        "Banded Lateral Walk"
+      ]
+    },
+    {
+      "date": "2026-05-18",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 38,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-16",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 42,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-05-14",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 41,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-13",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 39,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Box Squat",
+        "Dumbbell Hip Thrust",
+        "Banded Lateral Walk"
+      ]
+    },
+    {
+      "date": "2026-05-11",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 38,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-09",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 37,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-05-07",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 35,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-05-06",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 39,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-05-04",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": false,
+      "duration_min": 0,
+      "rpe": null,
+      "exercises": []
+    },
+    {
+      "date": "2026-05-02",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 34,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-04-30",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 46,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-29",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-04-27",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 52,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-25",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-04-23",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 51,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-22",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 49,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-04-20",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 50,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-18",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 52,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-04-16",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 52,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-15",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 52,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-04-13",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 52,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-11",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 46,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-04-09",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 45,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-08",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 45,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-04-06",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-04",
+      "title": "Full Body",
+      "planned": true,
+      "completed": false,
+      "duration_min": 0,
+      "rpe": null,
+      "exercises": []
+    },
+    {
+      "date": "2026-04-02",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-04-01",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-03-30",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 51,
+      "rpe": 6,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-03-28",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 49,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-03-26",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 45,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-03-25",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 47,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    },
+    {
+      "date": "2026-03-23",
+      "title": "Upper Body Push",
+      "planned": true,
+      "completed": true,
+      "duration_min": 51,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-03-21",
+      "title": "Full Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 44,
+      "rpe": 7,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Dead Bug"
+      ]
+    },
+    {
+      "date": "2026-03-19",
+      "title": "Upper Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 44,
+      "rpe": 7,
+      "exercises": [
+        "Dumbbell Floor Press",
+        "Dumbbell Bent-Over Row",
+        "Half-Kneeling Dumbbell Press",
+        "Band Pull-Apart"
+      ]
+    },
+    {
+      "date": "2026-03-18",
+      "title": "Lower Body",
+      "planned": true,
+      "completed": true,
+      "duration_min": 51,
+      "rpe": 6,
+      "exercises": [
+        "Kettlebell Goblet Squat",
+        "Kettlebell Romanian Deadlift",
+        "Dumbbell Hip Thrust"
+      ]
+    }
+  ],
+  "adherence": {
+    "weekly_completion_pct": [
+      {
+        "week_of": "2026-03-17",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-03-24",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-03-31",
+        "pct": 75
+      },
+      {
+        "week_of": "2026-04-07",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-04-14",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-04-21",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-04-28",
+        "pct": 75
+      },
+      {
+        "week_of": "2026-05-05",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-05-12",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-05-19",
+        "pct": 100
+      },
+      {
+        "week_of": "2026-05-26",
+        "pct": 75
+      },
+      {
+        "week_of": "2026-06-02",
+        "pct": 50
+      }
+    ],
+    "trend": "declining"
+  },
+  "biomarkers": {
+    "resting_hr_bpm": 58,
+    "hrv_ms": 47,
+    "sleep_hours_last_7_days": [
+      6.1,
+      5.4,
+      7.2,
+      6.0,
+      5.1,
+      7.8,
+      6.3
+    ],
+    "weight_trend_kg": [
+      {
+        "date": "2026-05-05",
+        "kg": 72.4
+      },
+      {
+        "date": "2026-05-19",
+        "kg": 71.9
+      },
+      {
+        "date": "2026-06-02",
+        "kg": 71.2
+      }
+    ],
+    "daily": [
+      {
+        "date": "2026-04-10",
+        "sleep_hours": 6.7,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 55,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-11",
+        "sleep_hours": 7.2,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-12",
+        "sleep_hours": 6.9,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 55,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-13",
+        "sleep_hours": 6.6,
+        "hrv_ms": 53,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-14",
+        "sleep_hours": 6.6,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-15",
+        "sleep_hours": 7.2,
+        "hrv_ms": 55,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-16",
+        "sleep_hours": 6.4,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-17",
+        "sleep_hours": 6.6,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-18",
+        "sleep_hours": 7.3,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-19",
+        "sleep_hours": 6.6,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-20",
+        "sleep_hours": 7.3,
+        "hrv_ms": 54,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-21",
+        "sleep_hours": 6.6,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-22",
+        "sleep_hours": 6.3,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-23",
+        "sleep_hours": 6.7,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-24",
+        "sleep_hours": 6.4,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-25",
+        "sleep_hours": 6.5,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-26",
+        "sleep_hours": 6.5,
+        "hrv_ms": 53,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-27",
+        "sleep_hours": 6.9,
+        "hrv_ms": 54,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-28",
+        "sleep_hours": 7.1,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-29",
+        "sleep_hours": 6.5,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-04-30",
+        "sleep_hours": 6.7,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-01",
+        "sleep_hours": 6.3,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-02",
+        "sleep_hours": 6.6,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-03",
+        "sleep_hours": 6.7,
+        "hrv_ms": 54,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-04",
+        "sleep_hours": 6.2,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-05",
+        "sleep_hours": 6.3,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-06",
+        "sleep_hours": 6.6,
+        "hrv_ms": 48,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-07",
+        "sleep_hours": 7.0,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-08",
+        "sleep_hours": 6.6,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-09",
+        "sleep_hours": 6.7,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-10",
+        "sleep_hours": 6.9,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-11",
+        "sleep_hours": 6.2,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-12",
+        "sleep_hours": 6.7,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-13",
+        "sleep_hours": 7.0,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-14",
+        "sleep_hours": 6.5,
+        "hrv_ms": 47,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-15",
+        "sleep_hours": 6.9,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-16",
+        "sleep_hours": 6.4,
+        "hrv_ms": 53,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-17",
+        "sleep_hours": 6.1,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-18",
+        "sleep_hours": 6.3,
+        "hrv_ms": 48,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-19",
+        "sleep_hours": 6.3,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-20",
+        "sleep_hours": 7.0,
+        "hrv_ms": 47,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-21",
+        "sleep_hours": 6.9,
+        "hrv_ms": 52,
+        "resting_hr_bpm": 56,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-22",
+        "sleep_hours": 6.4,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-23",
+        "sleep_hours": 7.0,
+        "hrv_ms": 47,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-24",
+        "sleep_hours": 6.8,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 59,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-25",
+        "sleep_hours": 6.8,
+        "hrv_ms": 48,
+        "resting_hr_bpm": 59,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-26",
+        "sleep_hours": 6.7,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 59,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-27",
+        "sleep_hours": 6.4,
+        "hrv_ms": 49,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-28",
+        "sleep_hours": 6.4,
+        "hrv_ms": 48,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-29",
+        "sleep_hours": 6.1,
+        "hrv_ms": 46,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-30",
+        "sleep_hours": 5.4,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      },
+      {
+        "date": "2026-05-31",
+        "sleep_hours": 7.2,
+        "hrv_ms": 51,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-06-01",
+        "sleep_hours": 6.0,
+        "hrv_ms": 46,
+        "resting_hr_bpm": 59,
+        "source": "device"
+      },
+      {
+        "date": "2026-06-02",
+        "sleep_hours": 5.1,
+        "hrv_ms": 45,
+        "resting_hr_bpm": 59,
+        "source": "device"
+      },
+      {
+        "date": "2026-06-03",
+        "sleep_hours": 7.8,
+        "hrv_ms": 50,
+        "resting_hr_bpm": 57,
+        "source": "device"
+      },
+      {
+        "date": "2026-06-04",
+        "sleep_hours": 6.3,
+        "hrv_ms": 47,
+        "resting_hr_bpm": 58,
+        "source": "device"
+      }
+    ]
+  },
+  "labs": {
+    "blood_panel": {
+      "date": "2026-04-20",
+      "ldl_mg_dl": 118,
+      "hdl_mg_dl": 61,
+      "triglycerides_mg_dl": 96,
+      "hba1c_pct": 5.3,
+      "vitamin_d_ng_ml": 28,
+      "ferritin_ng_ml": 41,
+      "crp_mg_l": 1.2
+    },
+    "dexa_scan": {
+      "date": "2026-03-30",
+      "body_fat_pct": 29.4,
+      "lean_mass_kg": 47.1,
+      "fat_mass_kg": 21.0,
+      "bone_density_z_score": 0.4,
+      "visceral_fat_cm2": 78
+    }
+  },
+  "chat_history": [
+    {
+      "ts": "2026-06-03T19:05:00-07:00",
+      "from": "coach",
+      "text": "Love it \u2014 that's the green light we wanted. How's the knee this morning vs. after?"
+    },
+    {
+      "ts": "2026-06-03T18:42:00-07:00",
+      "from": "member",
+      "text": "Knocked out the lower body session! Knee felt okay with the box squats."
+    },
+    {
+      "ts": "2026-05-30T08:12:00-07:00",
+      "from": "member",
+      "text": "Skipped Thursday, work blew up and I was wiped. Sorry!"
+    },
+    {
+      "ts": "2026-05-22T07:50:00-07:00",
+      "from": "member",
+      "text": "Still no barbell at home btw \u2014 only DBs and a kettlebell.",
+      "attachments": [
+        {
+          "type": "image",
+          "caption": "Home setup photo (synthetic placeholder)"
+        }
+      ]
+    },
+    {
+      "ts": "2026-05-16T18:30:00-07:00",
+      "from": "coach",
+      "text": "Checking in, how's the knee?"
+    },
+    {
+      "ts": "2026-05-11T08:40:00-07:00",
+      "from": "coach",
+      "text": "Thanks for flagging. Let's go knee-friendly until the care team clears you."
+    },
+    {
+      "ts": "2026-05-11T08:00:00-07:00",
+      "from": "member",
+      "text": "Tweaked my left knee hiking this weekend, kneecap area is sore."
+    },
+    {
+      "ts": "2026-04-27T21:10:00-07:00",
+      "from": "member",
+      "text": "Good! Busy at work though."
+    },
+    {
+      "ts": "2026-04-27T09:30:00-07:00",
+      "from": "coach",
+      "text": "How are you feeling about the new program?"
+    },
+    {
+      "ts": "2026-04-18T17:22:00-07:00",
+      "from": "member",
+      "text": "Finished the upper body day."
+    },
+    {
+      "ts": "2026-04-09T07:45:00-07:00",
+      "from": "member",
+      "text": "Sleep was rough but I still trained."
+    },
+    {
+      "ts": "2026-04-03T20:05:00-07:00",
+      "from": "member",
+      "text": "This week was great, 4 for 4."
+    },
+    {
+      "ts": "2026-03-28T12:30:00-07:00",
+      "from": "member",
+      "text": "Saturday session done, felt strong."
+    },
+    {
+      "ts": "2026-03-26T08:11:00-07:00",
+      "from": "member",
+      "text": "Quick q: ok to do the session at lunch instead?"
+    },
+    {
+      "ts": "2026-03-20T18:40:00-07:00",
+      "from": "member",
+      "text": "Done! Hit a new hip thrust PR."
+    },
+    {
+      "ts": "2026-03-14T10:15:00-07:00",
+      "from": "coach",
+      "text": "Absolutely, adding hip thrusts this week."
+    },
+    {
+      "ts": "2026-03-14T09:02:00-07:00",
+      "from": "member",
+      "text": "Can we add more glute work?"
+    },
+    {
+      "ts": "2026-03-11T19:20:00-07:00",
+      "from": "member",
+      "text": "Loved the full body session, legs are nicely sore!"
+    }
+  ],
+  "coach_brief": {
+    "generated_for": "2026-06-04",
+    "morning_tasks": [
+      {
+        "type": "celebrate",
+        "text": "Congratulate Jordan on completing yesterday's lower-body session \u2014 first pain-free squat work since the knee flare-up."
+      },
+      {
+        "type": "review_risk",
+        "text": "Check churn risk: adherence dropped 100% \u2192 50% over the last two weeks."
+      }
+    ],
+    "churn_risk": {
+      "level": "elevated",
+      "reasons": [
+        "Weekly adherence fell from 100% to 50% over 2 weeks",
+        "One skipped session with a fatigue/work explanation",
+        "Login frequency down vs. prior month"
+      ]
+    }
+  },
+  "as_of": "2026-06-04",
+  "self_reported": {
+    "typical_sleep_hours": 6.5,
+    "typical_session_minutes": 45,
+    "reported_on": "2024-09-15"
+  },
+  "checkins": [
+    {
+      "ts": "2026-05-29T07:05:00-07:00",
+      "sleep_hours": 6.1,
+      "energy": 2,
+      "stress": 4,
+      "note": "work is slammed, might skip today",
+      "source": "self-report"
+    },
+    {
+      "ts": "2026-06-02T06:50:00-07:00",
+      "sleep_hours": 5.1,
+      "energy": 2,
+      "soreness": 2,
+      "stress": 4,
+      "note": "deadline week, barely slept",
+      "source": "self-report"
+    },
+    {
+      "ts": "2026-06-03T07:10:00-07:00",
+      "sleep_hours": 7.8,
+      "energy": 4,
+      "pain": {
+        "area": "left knee",
+        "score": 2
+      },
+      "note": "knee feels okay, ready for box squats",
+      "source": "self-report"
+    }
+  ]
+}

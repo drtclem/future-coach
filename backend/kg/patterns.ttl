@@ -1,0 +1,100 @@
+# Movement patterns. The catalog's 36 pattern nodes are created by ingestion
+# (fcp:<slug>); this file adds:
+#   - taxonomy additions (hinge, box/partial squat) as skos:narrower/broader
+#   - fc:implies: which structure a pattern loads, and how (load type, D2).
+# Implications refine joints the catalog lists in joints_loaded. Only those
+# marked fc:always add a structure the catalog omitted (e.g. any jump loads the
+# knee). An exercise's load on a structure = the most demanding implication
+# among its patterns, unless an exercise-level override exists.
+# Load-type vocabularies: docs/DECISIONS.md D2 (research section 3).
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fcp:  <https://example.org/future-coach/kg/pattern/> .
+@prefix fca:  <https://example.org/future-coach/kg/anatomy/> .
+@prefix fcl:  <https://example.org/future-coach/kg/load/> .
+@prefix fcf:  <https://example.org/future-coach/kg/family/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# --- taxonomy additions (documented in DECISIONS D5.2) --------------------
+fcp:lower-pull-hinge a fc:MovementPattern ; skos:prefLabel "lower pull - hinge" ;
+    skos:altLabel "hinge", "hinging", "hip hinge" .
+fcp:lower-push-squat-box-partial a fc:MovementPattern ; skos:prefLabel "lower push - squat - box/partial" ;
+    skos:broader fcp:lower-push-squat ; skos:altLabel "box squat", "partial squat" .
+fcp:lower-push-squat skos:altLabel "squat", "squats", "squatting" .
+fcp:lower-push-lunge skos:altLabel "lunge", "lunges" .
+fcp:lower-push-split-squat skos:altLabel "split squat", "split squats" .
+fcp:cardio-plyometric skos:altLabel "jumping", "jumps", "plyometrics", "plyos", "high-impact jumping" .
+
+# Exercise families (variant-of target nodes; D1)
+fcf:deadlift a fc:ExerciseFamily ; skos:prefLabel "deadlift" ;
+    skos:altLabel "deadlifts", "deadlift variations", "RDL", "RDLs", "romanian deadlift" ;
+    fc:familyPattern fcp:lower-pull-hinge .
+
+# Load-type ranking per structure (higher = more demanding); used to pick the
+# dominant load when several patterns apply.
+fcl:impact                 fc:region fca:knee ; fc:demand 5 .
+fcl:loaded_deep_flexion    fc:region fca:knee ; fc:demand 4 .
+fcl:open_chain_terminal    fc:region fca:knee ; fc:demand 3 .
+fcl:loaded_shallow_flexion fc:region fca:knee ; fc:demand 2 .
+fcl:open_chain_midrange    fc:region fca:knee ; fc:demand 1 .
+fcl:axial_compression      fc:region fca:lumbar-spine ; fc:demand 4 .
+fcl:loaded_flexion         fc:region fca:lumbar-spine ; fc:demand 4 .
+fcl:loaded_rotation        fc:region fca:lumbar-spine ; fc:demand 3 .
+fcl:loaded_extension       fc:region fca:lumbar-spine ; fc:demand 3 .
+fcl:isometric_bracing      fc:region fca:lumbar-spine ; fc:demand 1 .
+fcl:end_range_under_load   fc:region fca:shoulder ; fc:demand 5 .
+fcl:loaded_overhead        fc:region fca:shoulder ; fc:demand 4 .
+fcl:horizontal_push        fc:region fca:shoulder ; fc:demand 2 .
+fcl:horizontal_pull        fc:region fca:shoulder ; fc:demand 2 .
+fcl:rotation_neutral       fc:region fca:shoulder ; fc:demand 1 .
+fcl:contact_only           fc:demand 0 .
+fcl:unspecified            fc:demand 3 .   # joint listed but no pattern explains it: treat as moderate
+
+# --- pattern -> (structure, load type) implications -----------------------
+fcp:cardio-plyometric   fc:implies [ fc:structure fca:knee ; fc:loadType fcl:impact ; fc:always true ] .
+fcp:lower-push-squat    fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_deep_flexion ] .
+fcp:lower-push-squat-box-partial fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] .
+fcp:lower-push-split-squat fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_deep_flexion ] .
+fcp:lower-push-lunge    fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_deep_flexion ] .
+fcp:lower-push-step-up  fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] .
+fcp:cardio-locomotion   fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] .
+fcp:lower-pull-hip-lift fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] .
+fcp:lower-pull-hinge    fc:implies [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] ,
+                                   [ fc:structure fca:lumbar-spine ; fc:loadType fcl:loaded_flexion ; fc:always true ] .
+fcp:quadruped           fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] ,
+                                   [ fc:structure fca:lumbar-spine ; fc:loadType fcl:isometric_bracing ] .
+fcp:yoga                fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:mobility-static     fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:mobility-dynamic    fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:regen               fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:car                 fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:lower-abduction     fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:lower-adduction     fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:core-anti-extension fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:isometric_bracing ] ,
+                                   [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:core-anti-rotation  fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:isometric_bracing ] .
+fcp:core-anti-lateral-flexion fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:isometric_bracing ] ,
+                                   [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:isometric           fc:implies [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .
+fcp:core-carry          fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:axial_compression ] ,
+                                   [ fc:structure fca:knee ; fc:loadType fcl:loaded_shallow_flexion ] .
+fcp:core-extension      fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:loaded_extension ] .
+fcp:core-rotation       fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:loaded_rotation ] .
+fcp:core-flexion        fc:implies [ fc:structure fca:lumbar-spine ; fc:loadType fcl:loaded_flexion ] .
+fcp:upper-push-vertical fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:loaded_overhead ] .
+fcp:upper-pull-vertical fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:loaded_overhead ] .
+fcp:upper-push-horizontal fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:horizontal_push ] .
+fcp:upper-pull-horizontal fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:horizontal_pull ] .
+fcp:upper-adduction     fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:end_range_under_load ] .
+fcp:shoulders-accessory fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:rotation_neutral ] .
+fcp:arms-accessory      fc:implies [ fc:structure fca:shoulder ; fc:loadType fcl:contact_only ] .
+
+# --- load-type labels (used to read care-team notes into member-specific rules, D2) ---
+fcl:impact skos:prefLabel "impact" ; skos:altLabel "plyometrics", "plyometric", "jumping", "high-impact", "high impact", "jumps", "running" .
+fcl:loaded_deep_flexion skos:prefLabel "deep loaded knee flexion" ;
+    skos:altLabel "deep knee flexion under load", "deep knee flexion", "deep squats", "deep squatting", "loaded deep flexion" .
+fcl:loaded_shallow_flexion skos:prefLabel "shallow loaded knee flexion" ; skos:altLabel "partial squats", "box squats" .
+fcl:loaded_overhead skos:prefLabel "loaded overhead" ; skos:altLabel "overhead pressing", "overhead work", "overhead" .
+fcl:end_range_under_load skos:prefLabel "end-range loading" ; skos:altLabel "end range loading", "end-range loading under load", "end range" .
+fcl:loaded_flexion skos:prefLabel "loaded spinal flexion" ; skos:altLabel "loaded flexion", "heavy lifting from the floor" .
+fcl:axial_compression skos:prefLabel "axial loading" ; skos:altLabel "axial compression", "heavy spinal loading" .
+fcl:loaded_rotation skos:prefLabel "loaded rotation" ; skos:altLabel "twisting under load" .

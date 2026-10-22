@@ -1,0 +1,13 @@
+{
+  "rates": {
+    "schema_valid": 1.0,
+    "safety_respected": 1.0,
+    "citation_present": 1.0,
+    "grounded": 1.0,
+    "fail_closed": 1.0,
+    "plan_fill": 1.0,
+    "no_member_text_in_logs": 1.0,
+    "llm_path": 0.9444
+  },
+  "cases": 20
+}

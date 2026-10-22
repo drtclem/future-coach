@@ -1,0 +1,39 @@
+# Anatomy: our own part-of hierarchy (D6). Labels are ours; SNOMED CT is
+# referenced by bare concept code only (skos:exactMatch). No SNOMED
+# descriptions or relationships are stored here -- see NOTICE.
+# Codes verified against NCI EVS, SNOMED CT US edition 2026_03_01.
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fca:  <https://example.org/future-coach/kg/anatomy/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sct:  <http://snomed.info/id/> .
+
+# --- the 9 catalog joints (exercises.json joints_loaded) ----------------
+fca:knee            a fc:Structure ; skos:prefLabel "knee" ; skos:altLabel "knees", "knee joint" ; skos:exactMatch sct:49076000 .
+fca:hip             a fc:Structure ; skos:prefLabel "hip" ; skos:altLabel "hips", "hip joint" .
+fca:ankle           a fc:Structure ; skos:prefLabel "ankle" ; skos:altLabel "ankles" .
+fca:shoulder        a fc:Structure ; skos:prefLabel "shoulder" ; skos:altLabel "shoulders" .
+fca:elbow           a fc:Structure ; skos:prefLabel "elbow" ; skos:altLabel "elbows" .
+fca:wrist           a fc:Structure ; skos:prefLabel "wrist" ; skos:altLabel "wrists" .
+fca:lumbar-spine    a fc:Structure ; skos:prefLabel "lumbar spine" ;
+    skos:altLabel "lower back", "low back", "lumbar region", "lumbar", "back" ; skos:exactMatch sct:122496007 ;
+    skos:closeMatch sct:52612000 .
+fca:thoracic-spine  a fc:Structure ; skos:prefLabel "thoracic spine" ; skos:altLabel "upper back", "mid back" .
+fca:cervical-spine  a fc:Structure ; skos:prefLabel "cervical spine" ; skos:altLabel "neck" .
+
+# --- sub-structures below joint level (SPEC_REVIEW 1.4, 2.5) ------------
+fca:patellofemoral-joint a fc:Structure ; fc:partOf fca:knee ; skos:prefLabel "patellofemoral joint" ;
+    skos:altLabel "kneecap joint", "PFJ" ; skos:exactMatch sct:129160003 .
+fca:tibiofemoral-joint   a fc:Structure ; fc:partOf fca:knee ; skos:prefLabel "tibiofemoral joint" ; skos:exactMatch sct:129159008 .
+fca:patella              a fc:Structure ; fc:partOf fca:patellofemoral-joint ; skos:prefLabel "patella" ; skos:altLabel "kneecap" ; skos:exactMatch sct:64234005 .
+fca:knee-meniscus        a fc:Structure ; fc:partOf fca:tibiofemoral-joint ; skos:prefLabel "meniscus" ; skos:altLabel "menisci" ; skos:exactMatch sct:43653007 .
+fca:medial-meniscus      a fc:Structure ; fc:partOf fca:knee-meniscus ; skos:prefLabel "medial meniscus" ; skos:exactMatch sct:49390008 .
+fca:lateral-meniscus     a fc:Structure ; fc:partOf fca:knee-meniscus ; skos:prefLabel "lateral meniscus" ; skos:exactMatch sct:10013000 .
+fca:acl                  a fc:Structure ; fc:partOf fca:knee ; skos:prefLabel "anterior cruciate ligament" ; skos:altLabel "ACL" ; skos:exactMatch sct:895007 .
+fca:mcl                  a fc:Structure ; fc:partOf fca:knee ; skos:prefLabel "medial collateral ligament" ; skos:altLabel "MCL" ; skos:exactMatch sct:1627004 .
+fca:glenohumeral-joint   a fc:Structure ; fc:partOf fca:shoulder ; skos:prefLabel "glenohumeral joint" ; skos:exactMatch sct:85537004 .
+fca:rotator-cuff         a fc:Structure ; fc:partOf fca:shoulder ; skos:prefLabel "rotator cuff" ; skos:exactMatch sct:7885001 .
+fca:rotator-cuff-tendon  a fc:Structure ; fc:partOf fca:rotator-cuff ; skos:prefLabel "rotator cuff tendon" ; skos:exactMatch sct:245100002 .
+
+# Laterality qualifiers (attached to member injuries in KG2, never to anatomy)
+fc:Left  skos:prefLabel "left" ; skos:exactMatch sct:7771000 .
+fc:Right skos:prefLabel "right" ; skos:exactMatch sct:24028007 .

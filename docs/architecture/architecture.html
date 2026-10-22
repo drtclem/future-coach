@@ -1,0 +1,307 @@
+<title>Future Coach Architecture</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&display=swap">
+<style>
+:root{--surface:#F3EFE7;--surface-raised:#FFFFFF;--ink:#0A0A0A;--ink-muted:#4A4A4A;--signal:#2741E8;--on-signal:#FFFFFF;
+--signal-text:#2741E8;--sky:#BFD0FF;--contrast-surface:#0A0A0A;--on-contrast:#F3EFE7;--on-contrast-muted:#CFCFCF;--hairline:#D9D3C7;
+--d-bg:var(--surface);--d-node:var(--surface-raised);--d-pnode:var(--surface);--d-llm:var(--sky);--d-inv:var(--contrast-surface);
+--d-ink:var(--ink);--d-muted:var(--ink-muted);--d-on-inv:var(--on-contrast);--d-on-inv-muted:var(--on-contrast-muted);
+--font:'Bricolage Grotesque',system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--surface:#16140F;--surface-raised:#221F19;--ink:#F3EFE7;
+--ink-muted:#B9B3A8;--signal-text:#8C9CFF;--sky:#26306B;--contrast-surface:#F3EFE7;--on-contrast:#0A0A0A;--on-contrast-muted:#4A4A4A;
+--hairline:#3A362E;color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#16140F;--surface-raised:#221F19;--ink:#F3EFE7;--ink-muted:#B9B3A8;--signal-text:#8C9CFF;
+--sky:#26306B;--contrast-surface:#F3EFE7;--on-contrast:#0A0A0A;--on-contrast-muted:#4A4A4A;--hairline:#3A362E;color-scheme:dark}
+body{background:var(--surface);color:var(--ink);font:400 16px/24px var(--font);margin:0}
+.wrap{max-width:1040px;margin:0 auto;padding-block:48px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));
+padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:20px}
+main{display:grid;gap:20px;min-width:0}
+header.cover{display:grid;gap:12px;padding-block:24px 8px}
+.byline{color:var(--ink-muted);font-weight:600;font-size:14px;line-height:20px;margin:0}
+h1{font-weight:800;font-size:clamp(36px,6vw,56px);line-height:1.04;letter-spacing:-0.03em;margin:0;text-wrap:balance}
+.hl{background:var(--signal);color:var(--on-signal);border-radius:16px;padding:0 .18em}
+.lede{font-size:20px;line-height:30px;max-width:65ch;margin:0;color:var(--ink)}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px}
+nav.toc a{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:999px;background:var(--surface-raised);
+color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+nav.toc a:focus-visible,a:focus-visible{outline:2px solid var(--signal-text);outline-offset:2px}
+section{background:var(--surface-raised);border-radius:24px;padding:28px;display:grid;gap:16px;min-width:0}
+section.feature{background:var(--contrast-surface);color:var(--on-contrast)}
+section.feature p,section.feature li{color:var(--on-contrast)}
+section > *{margin:0}
+h2{font-weight:700;font-size:32px;line-height:36px;letter-spacing:-0.02em;text-wrap:balance}
+h3{font-weight:800;font-size:22px;line-height:28px;letter-spacing:-0.01em}
+p,li{max-width:70ch}
+ul,ol{padding-left:22px;display:grid;gap:6px}
+a{color:var(--signal-text)}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--surface);border-radius:6px;padding:1px 5px}
+section.feature code{background:transparent;border:1px solid var(--on-contrast-muted)}
+.fig{overflow-x:auto;border-radius:16px;background:var(--surface)}
+.fig svg{display:block;min-width:760px;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0}
+.legend li{display:inline-flex;align-items:center;gap:8px;font-size:14px;line-height:20px;font-weight:600}
+.sw{width:18px;height:18px;border-radius:6px;display:inline-block}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;line-height:22px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px 10px 0;border-bottom:1px solid var(--hairline)}
+th{font-weight:600;color:var(--ink-muted);font-size:14px}
+td{font-variant-numeric:tabular-nums}
+footer{color:var(--ink-muted);font-size:13px;line-height:18px;padding-top:8px}
+@media (max-width:600px){section{padding:20px}h2{font-size:26px;line-height:30px}}
+</style>
+<div class="wrap">
+<header class="cover"><p class="byline">Future Coach, by Taylor Clements, PhD</p><h1 aria-label="Safe workouts, decided by the graph">Safe workouts, decided by the <span class="hl">graph</span></h1>
+<p class="lede">Future Coach is a dashboard where a coach asks for a workout in plain words and gets a plan built for one member, with every exercise choice traced back to a rule. Language models help read the request and write the plan. A knowledge graph decides what is safe.</p></header>
+<nav class="toc" aria-label="Sections"><a href="#the-core-rule">The core rule</a><a href="#how-to-read-the-diagrams">How to read the diagrams</a><a href="#system-and-deployment">System and deployment</a><a href="#the-workout-pipeline">The workout pipeline</a><a href="#the-knowledge-graph">The knowledge graph</a><a href="#member-data-and-re-planning">Member data and re-planning</a><a href="#the-copilot">The copilot</a><a href="#models-and-latency">Models and latency</a><a href="#observability-and-evals">Observability and evals</a><a href="#delivery">Delivery</a><a href="#where-the-code-lives">Where the code lives</a></nav>
+<main><section class="feature"><h2 id="the-core-rule">The core rule</h2>
+<p>Safety is never a prompt instruction. Every exercise a coach sees has passed a deterministic graph traversal, whichever path produced it. A model can propose an exercise, but only the graph can allow it.</p>
+<p>That one rule shapes the rest of the design:</p>
+<ul>
+<li><strong>The model picks only from a safe list.</strong> The composer receives the IDs of exercises that already passed the safety filter, as an enum. It can't name anything else.</li>
+<li><strong>A validator checks every plan, every time.</strong> Unknown IDs are dropped, unsafe picks are swapped for a safe substitute, and RPE is capped to the member's readiness.</li>
+<li><strong>When the system can't place a concern, it asks.</strong> "Something's off with her hammy" blocks the plan until the coach names the body area.</li>
+<li><strong>Without a model, nothing gets less safe.</strong> Offline, a rules extractor and a deterministic builder run the same pipeline through the same gate.</li>
+</ul>
+</section><section><h2 id="how-to-read-the-diagrams">How to read the diagrams</h2>
+<ul>
+<li><strong>Plain boxes:</strong> deterministic code.</li>
+<li><strong>Blue-tinted boxes:</strong> steps that call a language model, each with a deterministic fallback.</li>
+<li><strong>The inverted box:</strong> the step everything else depends on, where a diagram has one.</li>
+<li><strong>The solid blue box:</strong> what the coach or member sees first when the system stops or replies.</li>
+<li><strong>Dashed outline:</strong> a host machine, not a component.</li>
+</ul>
+</section><section><h2 id="system-and-deployment">System and deployment</h2>
+<div class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="t-system"><title id="t-system">System and deployment: coach browser, Caddy, the FastAPI app, graph store, event log, model providers</title><style>
+.bg{fill:var(--d-bg,#F3EFE7)}.n{fill:var(--d-node,#FFFFFF)}.p{fill:var(--d-pnode,#F3EFE7)}
+.l{fill:var(--d-llm,#BFD0FF)}.i{fill:var(--d-inv,#0A0A0A)}.g{fill:#2741E8}
+.t{font:600 15px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-ink,#0A0A0A)}.s{font:400 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.lb{font:400 12px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}.hd{font:700 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.ti{fill:var(--d-on-inv,#F3EFE7)}.si{fill:var(--d-on-inv-muted,#CFCFCF)}.tg{fill:#FFFFFF}
+.e{stroke:var(--d-muted,#4A4A4A);stroke-width:2;fill:none}.ah{fill:var(--d-muted,#4A4A4A)}
+.d{stroke:var(--d-muted,#4A4A4A);stroke-width:1.5;fill:none;stroke-dasharray:6 6}
+</style><defs><marker id="a-system" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" width="960" height="460"/><rect class="n" x="16" y="180" width="150" height="72" rx="16"/><text class="t" x="91.0" y="212" text-anchor="middle">Coach</text><text class="s" x="91.0" y="232" text-anchor="middle">browser</text><rect class="d" x="196" y="16" width="520" height="428" rx="24"/><text class="hd" x="216" y="44">DigitalOcean droplet, Ubuntu 24.04</text><rect class="n" x="216" y="180" width="140" height="72" rx="16"/><text class="t" x="286.0" y="212" text-anchor="middle">Caddy</text><text class="s" x="286.0" y="232" text-anchor="middle">HTTPS, coach login</text><rect class="n" x="386" y="64" width="310" height="260" rx="24"/><text class="t" x="410" y="96">FastAPI app</text><text class="s" x="410" y="116">one process, served by uvicorn</text><rect class="p" x="406" y="132" width="270" height="28" rx="14"/><text class="s" x="541" y="151" text-anchor="middle">Router, resolver, safety filter</text><rect class="p" x="406" y="166" width="270" height="28" rx="14"/><text class="s" x="541" y="185" text-anchor="middle">Scorer, composer, validator</text><rect class="p" x="406" y="200" width="270" height="28" rx="14"/><text class="s" x="541" y="219" text-anchor="middle">Copilot tools, grounding check</text><rect class="p" x="406" y="234" width="270" height="28" rx="14"/><text class="s" x="541" y="253" text-anchor="middle">Member intake and signals</text><rect class="p" x="406" y="268" width="270" height="28" rx="14"/><text class="s" x="541" y="287" text-anchor="middle">Dashboard (built React files)</text><rect class="n" x="386" y="348" width="148" height="76" rx="16"/><text class="t" x="460.0" y="382" text-anchor="middle">Oxigraph</text><text class="s" x="460.0" y="402" text-anchor="middle">KG1 + KG2, in-process</text><rect class="n" x="548" y="348" width="148" height="76" rx="16"/><text class="t" x="622.0" y="382" text-anchor="middle">Event log</text><text class="s" x="622.0" y="402" text-anchor="middle">append-only JSONL</text><rect class="l" x="760" y="64" width="184" height="64" rx="16"/><text class="t" x="852.0" y="92" text-anchor="middle">Anthropic</text><text class="s" x="852.0" y="112" text-anchor="middle">primary, via LiteLLM</text><rect class="l" x="760" y="152" width="184" height="64" rx="16"/><text class="t" x="852.0" y="180" text-anchor="middle">OpenAI</text><text class="s" x="852.0" y="200" text-anchor="middle">fallback, via LiteLLM</text><rect class="n" x="760" y="264" width="184" height="64" rx="16"/><text class="t" x="852.0" y="292" text-anchor="middle">Langfuse</text><text class="s" x="852.0" y="312" text-anchor="middle">traces and scores</text><path class="e" d="M166 216H214" marker-end="url(#a-system)"/><path class="e" d="M356 216H384" marker-end="url(#a-system)"/><path class="e" d="M460 324V346" marker-end="url(#a-system)"/><path class="e" d="M622 324V346" marker-end="url(#a-system)"/><path class="e" d="M696 96H758" marker-end="url(#a-system)"/><path class="e" d="M696 184H758" marker-end="url(#a-system)"/><path class="e" d="M696 296H758" marker-end="url(#a-system)"/></svg>
+</div>
+<p>Everything runs in one Python process on a single droplet. Caddy terminates HTTPS and puts one coach login in front of the whole app. FastAPI serves the API and the built React dashboard from the same port, so there's one thing to run and one thing to deploy.</p>
+<ul>
+<li><strong>Graph store:</strong> Oxigraph runs embedded (pyoxigraph), not as a server. It holds two named graphs: KG1 (the domain) and KG2 (members).</li>
+<li><strong>Runtime writes:</strong> check-ins, messages and plan versions are appended to an event log and replayed into KG2 at startup. Nothing is updated in place, so every input stays auditable. A third named graph holds each plan's PROV-O record, rebuilt from the same log.</li>
+<li><strong>Models:</strong> LiteLLM runs as a library inside the app. Each tier has a primary Anthropic model and an OpenAI fallback.</li>
+<li><strong>Tracing:</strong> every request writes a trace to Langfuse when keys are set, or to structured JSON logs otherwise.</li>
+</ul>
+</section><section><h2 id="the-workout-pipeline">The workout pipeline</h2>
+<div class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 832" role="img" aria-labelledby="t-pipeline"><title id="t-pipeline">Workout request pipeline from coach request to plan with provenance</title><style>
+.bg{fill:var(--d-bg,#F3EFE7)}.n{fill:var(--d-node,#FFFFFF)}.p{fill:var(--d-pnode,#F3EFE7)}
+.l{fill:var(--d-llm,#BFD0FF)}.i{fill:var(--d-inv,#0A0A0A)}.g{fill:#2741E8}
+.t{font:600 15px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-ink,#0A0A0A)}.s{font:400 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.lb{font:400 12px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}.hd{font:700 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.ti{fill:var(--d-on-inv,#F3EFE7)}.si{fill:var(--d-on-inv-muted,#CFCFCF)}.tg{fill:#FFFFFF}
+.e{stroke:var(--d-muted,#4A4A4A);stroke-width:2;fill:none}.ah{fill:var(--d-muted,#4A4A4A)}
+.d{stroke:var(--d-muted,#4A4A4A);stroke-width:1.5;fill:none;stroke-dasharray:6 6}
+</style><defs><marker id="a-pipeline" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" width="960" height="832"/><rect class="n" x="260" y="16" width="440" height="56" rx="16"/><text class="t" x="480.0" y="40" text-anchor="middle">Coach request</text><text class="s" x="480.0" y="60" text-anchor="middle">“Lower body, avoid her knee, 30 min”</text><rect class="n" x="260" y="104" width="440" height="56" rx="16"/><text class="t" x="480.0" y="128" text-anchor="middle">Router</text><text class="s" x="480.0" y="148" text-anchor="middle">rules, plus intent from the extraction call</text><text class="lb" x="728" y="126" text-anchor="start">compose, lookup, analyze,</text><text class="lb" x="728" y="143" text-anchor="start">or analyze then compose</text><rect class="n" x="260" y="192" width="210" height="72" rx="16"/><text class="t" x="365.0" y="224" text-anchor="middle">Rules extractor</text><text class="s" x="365.0" y="244" text-anchor="middle">SKOS labels, fuzzy match</text><rect class="l" x="490" y="192" width="210" height="72" rx="16"/><text class="t" x="595.0" y="224" text-anchor="middle">LLM extractor</text><text class="s" x="595.0" y="244" text-anchor="middle">in parallel, 2 s timeout</text><text class="lb" x="728" y="214" text-anchor="start">Union: the model can add</text><text class="lb" x="728" y="231" text-anchor="start">caution, never remove it</text><rect class="g" x="16" y="192" width="190" height="72" rx="16"/><text class="t tg" x="111.0" y="224" text-anchor="middle">Ask the coach</text><text class="s tg" x="111.0" y="244" text-anchor="middle">a concern it can't place</text><path class="e" d="M258 228H208" marker-end="url(#a-pipeline)"/><text class="lb" x="232" y="220" text-anchor="middle">blocks</text><rect class="n" x="260" y="296" width="440" height="56" rx="16"/><text class="t" x="480.0" y="320" text-anchor="middle">Constraints</text><text class="s" x="480.0" y="340" text-anchor="middle">injuries, care-team rules, request, readiness</text><text class="lb" x="728" y="318" text-anchor="start">from KG2 and today's</text><text class="lb" x="728" y="335" text-anchor="start">check-in or messages</text><rect class="i" x="260" y="384" width="440" height="64" rx="16"/><text class="t ti" x="480.0" y="412" text-anchor="middle">Safety filter</text><text class="s si" x="480.0" y="432" text-anchor="middle">graph traversal, no model involved</text><text class="lb" x="728" y="406" text-anchor="start">every exclusion keeps its</text><text class="lb" x="728" y="423" text-anchor="start">rule, source and graph path</text><rect class="n" x="260" y="480" width="440" height="56" rx="16"/><text class="t" x="480.0" y="504" text-anchor="middle">Scorer</text><text class="s" x="480.0" y="524" text-anchor="middle">goals, history, journey stage, preferences</text><text class="lb" x="728" y="502" text-anchor="start">ranks only what is</text><text class="lb" x="728" y="519" text-anchor="start">already safe</text><rect class="n" x="260" y="568" width="210" height="72" rx="16"/><text class="t" x="365.0" y="600" text-anchor="middle">Deterministic builder</text><text class="s" x="365.0" y="620" text-anchor="middle">offline floor, under 50 ms</text><rect class="l" x="490" y="568" width="210" height="72" rx="16"/><text class="t" x="595.0" y="600" text-anchor="middle">LLM composer</text><text class="s" x="595.0" y="620" text-anchor="middle">picks from safe IDs only</text><text class="lb" x="728" y="590" text-anchor="start">falls back to the builder</text><text class="lb" x="728" y="607" text-anchor="start">on timeout or bad output</text><rect class="n" x="260" y="672" width="440" height="56" rx="16"/><text class="t" x="480.0" y="696" text-anchor="middle">Validator</text><text class="s" x="480.0" y="716" text-anchor="middle">always runs, whichever builder won</text><text class="lb" x="728" y="694" text-anchor="start">drops unknown IDs and unsafe text,</text><text class="lb" x="728" y="711" text-anchor="start">swaps picks, clamps doses, fits time</text><rect class="n" x="260" y="760" width="440" height="56" rx="16"/><text class="t" x="480.0" y="784" text-anchor="middle">Plan + provenance</text><text class="s" x="480.0" y="804" text-anchor="middle">sets, reps, rest, RPE, and why for each</text><path class="e" d="M480 72V102" marker-end="url(#a-pipeline)"/><path class="e" d="M480 352V382" marker-end="url(#a-pipeline)"/><path class="e" d="M480 448V478" marker-end="url(#a-pipeline)"/><path class="e" d="M480 728V758" marker-end="url(#a-pipeline)"/><path class="e" d="M480 160V176H365V190" marker-end="url(#a-pipeline)"/><path class="e" d="M480 176H595V190" marker-end="url(#a-pipeline)"/><path class="e" d="M480 536V552H365V566" marker-end="url(#a-pipeline)"/><path class="e" d="M480 552H595V566" marker-end="url(#a-pipeline)"/><path class="e" d="M365 264V280H595V264"/><path class="e" d="M480 280V294" marker-end="url(#a-pipeline)"/><path class="e" d="M365 640V656H595V640"/><path class="e" d="M480 656V670" marker-end="url(#a-pipeline)"/></svg>
+</div>
+<p>After the request arrives, it moves through eight steps. Only two model calls happen along the way: the extraction call, which also feeds the router, and the composer. Each has a deterministic stand-in.</p>
+<ol>
+<li><strong>Router.</strong> Keyword rules settle the obvious cases. Otherwise the extraction call (which runs anyway) also returns an intent, so routing adds no extra model call. A rules-versus-model conflict routes to the broadest path.</li>
+<li><strong>Resolver.</strong> Two extractors run in parallel: rules over the graph's SKOS labels (exact, then fuzzy, then a local embedding model for body-part slang), and a small model with a 2 second timeout. Their results are merged so that the model can only add caution. If the model finds a constraint the rules missed, it counts. If the rules find one the model missed, it still counts.</li>
+<li><strong>Constraints.</strong> The member's injuries and care-team rules come from KG2. The coach's request adds exclusions, equipment and time. Today's readiness sets an RPE cap.</li>
+<li><strong>Safety filter.</strong> A graph traversal over every exercise. Each exclusion keeps its rule, its source and the graph path that triggered it.</li>
+<li><strong>Scorer.</strong> Ranks the safe set by the request's targets, the member's goals, recent history (for variety), journey stage and dislikes.</li>
+<li><strong>Composer.</strong> The model picks and doses exercises from the top of the safe list. On timeout or bad output, the deterministic builder produces the plan instead, in under 50 ms.</li>
+<li><strong>Validator.</strong> Always runs. Model text never replaces the graph's safety cue for an exercise, and any cue, reason or summary that coaches through pain or gives clinical advice is dropped. Reps, holds and rest are clamped to sane ranges, and every repair is logged without echoing the model's text. More than two repairs and the model's plan is rejected outright, so after a second failed try the deterministic builder answers. It also fits the plan to the time window, trimming accessories first and filling short plans, but it never adds volume to an exercise that carries an injury modification.</li>
+<li><strong>Plan and provenance.</strong> The coach sees each exercise with sets, reps, rest, RPE, a pictogram and why it was picked, plus everything excluded and why, drawn as the graph paths that decided it. The same record is written to the store as W3C PROV-O.</li>
+</ol>
+<p>Fail-closed rules live in the resolver: a safety word ("pain", "sore", "tweaked") in a sentence with no resolved body area blocks the plan, and so does a body area the model flags that the graph can't resolve. The embedding pass never resolves a safety concern; it can only add a suggestion to the question ("Did you mean the hamstrings?"). Goals fail open: an unknown target just drops out, with a note.</p>
+</section><section><h2 id="the-knowledge-graph">The knowledge graph</h2>
+<div class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="t-graph"><title id="t-graph">Knowledge graph model, worked example: why the goblet squat is excluded for Jordan's knee</title><style>
+.bg{fill:var(--d-bg,#F3EFE7)}.n{fill:var(--d-node,#FFFFFF)}.p{fill:var(--d-pnode,#F3EFE7)}
+.l{fill:var(--d-llm,#BFD0FF)}.i{fill:var(--d-inv,#0A0A0A)}.g{fill:#2741E8}
+.t{font:600 15px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-ink,#0A0A0A)}.s{font:400 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.lb{font:400 12px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}.hd{font:700 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.ti{fill:var(--d-on-inv,#F3EFE7)}.si{fill:var(--d-on-inv-muted,#CFCFCF)}.tg{fill:#FFFFFF}
+.e{stroke:var(--d-muted,#4A4A4A);stroke-width:2;fill:none}.ah{fill:var(--d-muted,#4A4A4A)}
+.d{stroke:var(--d-muted,#4A4A4A);stroke-width:1.5;fill:none;stroke-dasharray:6 6}
+</style><defs><marker id="a-graph" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" width="960" height="640"/><rect class="n" x="16" y="16" width="640" height="528" rx="24"/><text class="hd" x="40" y="48">KG1: domain graph</text><rect class="n" x="672" y="16" width="272" height="528" rx="24"/><text class="hd" x="696" y="48">KG2: member graph</text><rect class="p" x="40" y="80" width="200" height="56" rx="16"/><text class="t" x="140.0" y="104" text-anchor="middle">Kettlebell Goblet Squat</text><text class="s" x="140.0" y="124" text-anchor="middle">exercise</text><rect class="p" x="40" y="200" width="200" height="56" rx="16"/><text class="t" x="140.0" y="224" text-anchor="middle">lower push: squat</text><text class="s" x="140.0" y="244" text-anchor="middle">movement pattern</text><rect class="p" x="40" y="320" width="200" height="56" rx="16"/><text class="t" x="140.0" y="344" text-anchor="middle">kettlebell, 1 needed</text><text class="s" x="140.0" y="364" text-anchor="middle">equipment requirement</text><rect class="p" x="300" y="80" width="160" height="56" rx="16"/><text class="t" x="380.0" y="104" text-anchor="middle">Stress</text><text class="s" x="380.0" y="124" text-anchor="middle">derived from the pattern</text><rect class="p" x="300" y="200" width="160" height="56" rx="16"/><text class="t" x="380.0" y="224" text-anchor="middle">knee</text><text class="s" x="380.0" y="244" text-anchor="middle">structure</text><rect class="p" x="300" y="320" width="160" height="56" rx="16"/><text class="t" x="380.0" y="344" text-anchor="middle">patellofemoral joint</text><text class="s" x="380.0" y="364" text-anchor="middle">structure</text><rect class="p" x="300" y="440" width="160" height="56" rx="16"/><text class="t" x="380.0" y="464" text-anchor="middle">PFP</text><text class="s" x="380.0" y="484" text-anchor="middle">condition (SNOMED)</text><rect class="p" x="490" y="200" width="150" height="56" rx="16"/><text class="t" x="565.0" y="224" text-anchor="middle">loaded deep flexion</text><text class="s" x="565.0" y="244" text-anchor="middle">load type</text><rect class="p" x="490" y="320" width="150" height="72" rx="16"/><text class="t" x="565.0" y="344" text-anchor="middle">PFP rule</text><text class="s" x="565.0" y="364" text-anchor="middle">recovering: downrank</text><text class="s" x="565.0" y="381" text-anchor="middle">source: Willy 2019</text><rect class="p" x="692" y="80" width="232" height="72" rx="16"/><text class="t" x="808.0" y="104" text-anchor="middle">Care-team note</text><text class="s" x="808.0" y="124" text-anchor="middle">“avoid deep knee flexion</text><text class="s" x="808.0" y="141" text-anchor="middle">under load”</text><rect class="p" x="692" y="200" width="232" height="56" rx="16"/><text class="t" x="808.0" y="224" text-anchor="middle">Member rule</text><text class="s" x="808.0" y="244" text-anchor="middle">deep flexion: exclude</text><rect class="p" x="692" y="440" width="232" height="56" rx="16"/><text class="t" x="808.0" y="464" text-anchor="middle">Left knee injury</text><text class="s" x="808.0" y="484" text-anchor="middle">Jordan, recovering</text><path class="e" d="M240 108H298" marker-end="url(#a-graph)"/><text class="lb" x="269" y="100" text-anchor="middle">stresses</text><path class="e" d="M140 136V198" marker-end="url(#a-graph)"/><text class="lb" x="148" y="172" text-anchor="start">pattern</text><path class="e" d="M140 256V318" marker-end="url(#a-graph)"/><text class="lb" x="148" y="292" text-anchor="start">requires</text><path class="e" d="M380 136V198" marker-end="url(#a-graph)"/><text class="lb" x="388" y="172" text-anchor="start">structure</text><path class="e" d="M440 136L540 198" marker-end="url(#a-graph)"/><text class="lb" x="500" y="158" text-anchor="start">load type</text><path class="e" d="M380 320V258" marker-end="url(#a-graph)"/><text class="lb" x="388" y="292" text-anchor="start">part of</text><path class="e" d="M380 440V378" marker-end="url(#a-graph)"/><text class="lb" x="388" y="412" text-anchor="start">affects</text><path class="e" d="M565 320V258" marker-end="url(#a-graph)"/><text class="lb" x="573" y="292" text-anchor="start">load type</text><path class="e" d="M565 392V455H462" marker-end="url(#a-graph)"/><text class="lb" x="573" y="428" text-anchor="start">condition</text><path class="e" d="M692 480H462" marker-end="url(#a-graph)"/><text class="lb" x="577" y="498" text-anchor="middle">instance of</text><path class="e" d="M808 152V198" marker-end="url(#a-graph)"/><text class="lb" x="816" y="180" text-anchor="start">parsed into</text><path class="e" d="M692 228H642" marker-end="url(#a-graph)"/><path class="e" d="M808 256V438" marker-end="url(#a-graph)"/><text class="lb" x="816" y="350" text-anchor="start">applies to</text><rect class="i" x="16" y="568" width="928" height="56" rx="16"/><text class="t ti" x="480.0" y="592" text-anchor="middle">Strictest tier wins</text><text class="s si" x="480.0" y="612" text-anchor="middle">The member rule (exclude) beats the condition rule (downrank), so the goblet squat is excluded, with this path as its reason.</text></svg>
+</div>
+<p>The diagram follows one real exclusion from the required knee scenario.</p>
+<ul>
+<li><strong>Exercises don't just "load the knee".</strong> Each exercise has n-ary <em>stress</em> nodes: which structure, which load type, and where that came from (usually its movement pattern). Knee load types separate impact, loaded deep flexion, loaded shallow flexion, open-chain work and kneeling contact. That's what lets the graph allow a box squat for a sore knee while excluding jump lunges, and allow kneeling exercises at all.</li>
+<li><strong>Anatomy is a part-of hierarchy, walked in both directions.</strong> A rule about the patellofemoral joint reaches exercises that stress the knee, and a rule about the knee reaches its parts.</li>
+<li><strong>Conditions carry rules as data.</strong> Each rule names a condition, a load type, a stage (acute, recovering, cleared) and a tier (exclude, downrank, allow, uprank). It also carries a cue, a source, a confidence level and a review status. All of them ship as <code>unreviewed</code> until a clinician signs off.</li>
+<li><strong>A member's injury is an instance of a condition,</strong> with its side and stage. Care-team notes are parsed into member rules by matching the graph's load-type labels ("avoid deep knee flexion under load" becomes an exclude rule).</li>
+<li><strong>The strictest applicable tier wins.</strong> In this example the condition's own rule only downranks deep flexion for a recovering knee, but Jordan's care team said to avoid it, so the goblet squat is excluded.</li>
+<li><strong>Exercise families and equipment are graph edges too.</strong> "No deadlift variations" follows <code>variant-of</code> to the deadlift family, so RDLs go while kettlebell swings stay. Equipment is checked with quantity: a double-kettlebell exercise fails when the member has one kettlebell.</li>
+</ul>
+<p>Equipment, movement patterns and conditions align to EXMO where it has a matching class: 47 SKOS mappings, each checked against the current EXMO release. Anatomy and conditions carry SNOMED CT codes only, never licensed descriptions. COPPER was evaluated and not mapped, because its own IRIs don't resolve and its license is non-commercial. Everything else (load types, rules, the stresses relation) is our own schema.</p>
+</section><section><h2 id="member-data-and-re-planning">Member data and re-planning</h2>
+<div class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" role="img" aria-labelledby="t-replan"><title id="t-replan">Member data flow: a message is stored, changes readiness, and re-plans today's session in the background</title><style>
+.bg{fill:var(--d-bg,#F3EFE7)}.n{fill:var(--d-node,#FFFFFF)}.p{fill:var(--d-pnode,#F3EFE7)}
+.l{fill:var(--d-llm,#BFD0FF)}.i{fill:var(--d-inv,#0A0A0A)}.g{fill:#2741E8}
+.t{font:600 15px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-ink,#0A0A0A)}.s{font:400 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.lb{font:400 12px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}.hd{font:700 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.ti{fill:var(--d-on-inv,#F3EFE7)}.si{fill:var(--d-on-inv-muted,#CFCFCF)}.tg{fill:#FFFFFF}
+.e{stroke:var(--d-muted,#4A4A4A);stroke-width:2;fill:none}.ah{fill:var(--d-muted,#4A4A4A)}
+.d{stroke:var(--d-muted,#4A4A4A);stroke-width:1.5;fill:none;stroke-dasharray:6 6}
+</style><defs><marker id="a-replan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" width="960" height="340"/><rect class="n" x="16" y="16" width="208" height="96" rx="16"/><text class="t" x="120.0" y="52" text-anchor="middle">Member message</text><text class="s" x="120.0" y="72" text-anchor="middle">“slept 4 hours,</text><text class="s" x="120.0" y="89" text-anchor="middle">only 20 min today”</text><rect class="n" x="256" y="16" width="208" height="96" rx="16"/><text class="t" x="360.0" y="52" text-anchor="middle">Intake</text><text class="s" x="360.0" y="72" text-anchor="middle">sleep 4 h, one-off cause,</text><text class="s" x="360.0" y="89" text-anchor="middle">20 min available</text><rect class="n" x="496" y="16" width="208" height="96" rx="16"/><text class="t" x="600.0" y="52" text-anchor="middle">Event log and KG2</text><text class="s" x="600.0" y="72" text-anchor="middle">stored as observations,</text><text class="s" x="600.0" y="89" text-anchor="middle">nothing overwritten</text><rect class="n" x="736" y="16" width="208" height="96" rx="16"/><text class="t" x="840.0" y="52" text-anchor="middle">Signals</text><text class="s" x="840.0" y="72" text-anchor="middle">readiness low:</text><text class="s" x="840.0" y="89" text-anchor="middle">RPE cap 6, volume 0.6</text><rect class="g" x="16" y="208" width="208" height="96" rx="16"/><text class="t tg" x="120.0" y="244" text-anchor="middle">Reply at once</text><text class="s tg" x="120.0" y="264" text-anchor="middle">“Got it, today's session</text><text class="s tg" x="120.0" y="281" text-anchor="middle">will fit in 20 min.”</text><rect class="l" x="496" y="208" width="208" height="96" rx="16"/><text class="t" x="600.0" y="244" text-anchor="middle">Background re-plan</text><text class="s" x="600.0" y="264" text-anchor="middle">same pipeline,</text><text class="s" x="600.0" y="281" text-anchor="middle">same safety gate</text><rect class="n" x="736" y="208" width="208" height="96" rx="16"/><text class="t" x="840.0" y="244" text-anchor="middle">Plan v2 + diff</text><text class="s" x="840.0" y="264" text-anchor="middle">the coach sees what</text><text class="s" x="840.0" y="281" text-anchor="middle">changed and why</text><path class="e" d="M224 64H254" marker-end="url(#a-replan)"/><path class="e" d="M464 64H494" marker-end="url(#a-replan)"/><path class="e" d="M704 64H734" marker-end="url(#a-replan)"/><path class="e" d="M360 112V156H120V206" marker-end="url(#a-replan)"/><text class="lb" x="240" y="148" text-anchor="middle">immediately</text><path class="e" d="M840 112V176H600V206" marker-end="url(#a-replan)"/><text class="lb" x="720" y="168" text-anchor="middle">if a plan exists today</text><path class="e" d="M704 256H734" marker-end="url(#a-replan)"/></svg>
+</div>
+<p>Members can check in on the day or message hours before a session. Both feed the same pipeline.</p>
+<ul>
+<li><strong>Intake parses the message</strong> into observations: sleep hours, pain by area and score, time available, equipment today, and context such as a one-off cause ("baby up all night").</li>
+<li><strong>Signals are computed deterministically,</strong> one job per timescale. Readiness compares today against the member's own baseline and sets an RPE cap of 8, 7 or 6 with a matching volume factor. Journey stage (onboarding, building, established, at-risk, rehab) shapes selection and progression. Churn risk counts completed weeks only, so a two-day-old week can't look like a collapse.</li>
+<li><strong>New data can only make a plan more cautious.</strong> A check-in can lower intensity or add a constraint. It never loosens a safety rule.</li>
+<li><strong>The reply comes first.</strong> The member gets an acknowledgement at once. If today's plan exists, it is rebuilt in the background through the same pipeline, saved as a new version, and shown to the coach as a diff.</li>
+</ul>
+</section><section><h2 id="the-copilot">The copilot</h2>
+<p>The copilot answers questions about a member ("Is she a churn risk?", "Congratulate her on yesterday's workout"). It works like a small research loop with hard limits.</p>
+<ul>
+<li><strong>Tools return evidence with IDs.</strong> Sleep, adherence, messages, labs, churn and yesterday's session each come back as data plus citable evidence.</li>
+<li><strong>Every paragraph must cite evidence.</strong> A grounding check rejects uncited claims, quotes that don't appear word for word in a source, and anything that reads as clinical advice (supplements, doses, medications) or tells a member to push through pain. Plans and answers share the same wording guard.</li>
+<li><strong>One repair round, then a safe fallback.</strong> A rejected answer goes back to the model once with the reasons. If it fails again, a deterministic writer answers from the same evidence.</li>
+<li><strong>Workout requests go through the same gate.</strong> "Build her a 30 minute lower body workout" asked in the copilot runs the full pipeline above.</li>
+</ul>
+</section><section><h2 id="models-and-latency">Models and latency</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Primary</th>
+<th>Fallback</th>
+<th>Used for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small</td>
+<td>Claude Haiku 5.5</td>
+<td>GPT-5 mini</td>
+<td>extraction, routing, composing plans</td>
+</tr>
+<tr>
+<td>Mid</td>
+<td>Claude Sonnet 5.5</td>
+<td>GPT-5.4</td>
+<td>copilot answers</td>
+</tr>
+<tr>
+<td>Large</td>
+<td>Claude Opus 5.5</td>
+<td>GPT-5.4</td>
+<td>available, unused by default</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Typical time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Offline plan, or a blocked request</td>
+<td>under 50 ms (about 2 s with the model extractor)</td>
+</tr>
+<tr>
+<td>Plan with the model composer</td>
+<td>draft in about 2 s, final in 8 to 20 s</td>
+</tr>
+<tr>
+<td>Copilot answer</td>
+<td>4 to 15 s</td>
+</tr>
+</tbody>
+</table>
+<p>The model composer alone misses the original 5 second target, so the dashboard streams the plan: as soon as the safe candidates are scored, the coach gets a draft from the deterministic builder, already through the validator (typically within 2 s), and the composer's version replaces it when it arrives. Only the final plan is stored. Member messages already avoid the wait: the reply comes first and the re-plan runs in the background.</p>
+</section><section><h2 id="observability-and-evals">Observability and evals</h2>
+<p>Every request gets one trace: route and confidence, each extractor's mentions, constraints, every exclusion with its reason, and per-step model, tokens, cost and latency. Coach thumbs up or down attaches to the trace as a score. Member and coach free text is never logged.</p>
+<p>The golden set has 23 cases: the three required scenarios across members, three prompt-injection attempts (a member message, a coach request and a copilot question each telling the system to drop its rules), the traps from the spec review ("back squat" is not a back injury, "my pecs" is a target, an unplaceable hamstring must block), readiness and message cases, and copilot grounding cases. The eval runner re-derives safety from the graph on its own and doesn't trust the pipeline's claims.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Floor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Schema valid, safety respected, citation present, grounded, fail closed, plan fill, no member text in logs</td>
+<td>100%</td>
+</tr>
+<tr>
+<td>Model path used (no silent fallback)</td>
+<td>80%</td>
+</tr>
+</tbody>
+</table>
+<p>A merge also fails if any metric drops more than 5% (relative) below the committed baseline. The model-path metric is held by its floor only, because one flaky reply moves it about 6 points.</p>
+</section><section><h2 id="delivery">Delivery</h2>
+<div class="fig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" role="img" aria-labelledby="t-delivery"><title id="t-delivery">Delivery pipeline from commit to the live site</title><style>
+.bg{fill:var(--d-bg,#F3EFE7)}.n{fill:var(--d-node,#FFFFFF)}.p{fill:var(--d-pnode,#F3EFE7)}
+.l{fill:var(--d-llm,#BFD0FF)}.i{fill:var(--d-inv,#0A0A0A)}.g{fill:#2741E8}
+.t{font:600 15px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-ink,#0A0A0A)}.s{font:400 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.lb{font:400 12px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}.hd{font:700 13px 'Bricolage Grotesque',system-ui,sans-serif;fill:var(--d-muted,#4A4A4A)}
+.ti{fill:var(--d-on-inv,#F3EFE7)}.si{fill:var(--d-on-inv-muted,#CFCFCF)}.tg{fill:#FFFFFF}
+.e{stroke:var(--d-muted,#4A4A4A);stroke-width:2;fill:none}.ah{fill:var(--d-muted,#4A4A4A)}
+.d{stroke:var(--d-muted,#4A4A4A);stroke-width:1.5;fill:none;stroke-dasharray:6 6}
+</style><defs><marker id="a-delivery" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="bg" width="960" height="300"/><rect class="n" x="16" y="16" width="212" height="88" rx="16"/><text class="t" x="122.0" y="48" text-anchor="middle">Commit</text><text class="s" x="122.0" y="68" text-anchor="middle">ruff, gitleaks,</text><text class="s" x="122.0" y="85" text-anchor="middle">conventional message</text><rect class="n" x="252" y="16" width="212" height="88" rx="16"/><text class="t" x="358.0" y="48" text-anchor="middle">Push</text><text class="s" x="358.0" y="68" text-anchor="middle">LLM-free tests</text><text class="s" x="358.0" y="85" text-anchor="middle">(pre-push hook)</text><rect class="l" x="488" y="16" width="212" height="88" rx="16"/><text class="t" x="594.0" y="48" text-anchor="middle">MR pipeline</text><text class="s" x="594.0" y="68" text-anchor="middle">lint, tests, build,</text><text class="s" x="594.0" y="85" text-anchor="middle">golden set, real models</text><rect class="i" x="724" y="16" width="220" height="88" rx="16"/><text class="t ti" x="834.0" y="48" text-anchor="middle">Eval gate</text><text class="s si" x="834.0" y="68" text-anchor="middle">all cases pass, floors met,</text><text class="s si" x="834.0" y="85" text-anchor="middle">no drop vs baseline</text><rect class="n" x="16" y="196" width="212" height="88" rx="16"/><text class="t" x="122.0" y="228" text-anchor="middle">Merge to main</text><text class="s" x="122.0" y="248" text-anchor="middle">protected branch,</text><text class="s" x="122.0" y="265" text-anchor="middle">pipeline must pass</text><rect class="n" x="252" y="196" width="212" height="88" rx="16"/><text class="t" x="358.0" y="228" text-anchor="middle">Deploy job</text><text class="s" x="358.0" y="248" text-anchor="middle">rsync, write keys,</text><text class="s" x="358.0" y="265" text-anchor="middle">restart, health check</text><rect class="n" x="488" y="196" width="212" height="88" rx="16"/><text class="t" x="594.0" y="228" text-anchor="middle">Live site</text><text class="s" x="594.0" y="248" text-anchor="middle">198-199-77-33</text><text class="s" x="594.0" y="265" text-anchor="middle">.sslip.io</text><path class="e" d="M228 60H250" marker-end="url(#a-delivery)"/><path class="e" d="M464 60H486" marker-end="url(#a-delivery)"/><path class="e" d="M700 60H722" marker-end="url(#a-delivery)"/><path class="e" d="M834 104V150H122V194" marker-end="url(#a-delivery)"/><path class="e" d="M228 240H250" marker-end="url(#a-delivery)"/><path class="e" d="M464 240H486" marker-end="url(#a-delivery)"/><text class="lb" x="478" y="142" text-anchor="middle">all jobs run on the self-hosted Mac runner</text></svg>
+</div>
+<p>Local hooks catch formatting, secrets and commit-message problems before anything leaves the laptop. Every merge request runs lint, the LLM-free test suite, the dashboard build and the golden set against real models. <code>main</code> is protected, so code reaches it only through a merge request with a green pipeline, and every merge deploys itself: the job copies the build to the droplet as a limited <code>deploy</code> user, writes the API keys from GitLab's masked variables, restarts the service and checks its health endpoint.</p>
+</section><section><h2 id="where-the-code-lives">Where the code lives</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Graph build and SPARQL helpers</td>
+<td><code>backend/app/graph/</code></td>
+</tr>
+<tr>
+<td>Domain graph source (anatomy, patterns, conditions, equipment)</td>
+<td><code>backend/kg/*.ttl</code></td>
+</tr>
+<tr>
+<td>Safety filter</td>
+<td><code>backend/app/safety/filter.py</code></td>
+</tr>
+<tr>
+<td>Resolver and router</td>
+<td><code>backend/app/resolver/</code></td>
+</tr>
+<tr>
+<td>Member graph, intake, signals</td>
+<td><code>backend/app/member/</code></td>
+</tr>
+<tr>
+<td>Scoring, composing, validating</td>
+<td><code>backend/app/plan/</code></td>
+</tr>
+<tr>
+<td>Copilot tools and grounding</td>
+<td><code>backend/app/copilot/</code></td>
+</tr>
+<tr>
+<td>Model access and tracing</td>
+<td><code>backend/app/llm.py</code>, <code>backend/app/observability.py</code></td>
+</tr>
+<tr>
+<td>Golden set and gate</td>
+<td><code>backend/evals/</code></td>
+</tr>
+<tr>
+<td>Dashboard</td>
+<td><code>frontend/src/</code></td>
+</tr>
+<tr>
+<td>Server setup</td>
+<td><code>scripts/bootstrap.sh</code></td>
+</tr>
+</tbody>
+</table>
+<p>Each design decision, with the options considered and why one won, is in <a href="../DECISIONS.md"><code>docs/DECISIONS.md</code></a>. Worked examples with full filtering traces are in <a href="../examples.md"><code>docs/examples.md</code></a>.</p></section></main>
+<footer>Generated from docs/architecture/ARCHITECTURE.md by docs/architecture/build.py.</footer>
+</div>

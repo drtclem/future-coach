@@ -1,0 +1,41 @@
+# Local layer of the CI/CD safety net (cicd-setup skill, adapted for Python):
+#   commit      fast checks on staged files (format, lint, secrets, yaml)
+#   commit-msg  Conventional Commits (feat:, fix:, chore:, ...)
+#   pre-push    the LLM-free test suite
+default_install_hook_types: [pre-commit, commit-msg, pre-push]
+default_stages: [pre-commit]
+# The provided dataset files are kept byte-for-byte as delivered.
+exclude: ^data/(exercises|member-context)\.json$
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args: [--maxkb=1024]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.1
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+  - repo: local
+    hooks:
+      - id: pytest-llm-free
+        name: LLM-free test suite
+        entry: bash -c 'cd backend && ../.venv/bin/python -m pytest -q'
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

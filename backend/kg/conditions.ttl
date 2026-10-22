@@ -1,0 +1,91 @@
+# Clinical conditions and contraindication rules (D2).
+# Rules are DATA: each carries a source, confidence and review status, and is
+# clearly marked as requiring clinician sign-off. Edge direction is
+#   rule --(loadType, stage)--> condition  i.e. "pattern contraindicated-for condition".
+# Defaults when no explicit rule matches a stressed structure:
+#   acute -> exclude, recovering -> downrank, cleared -> allow; contact_only -> allow.
+# Sources: docs/DECISIONS.md D2 and the clinical research summary.
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fca:  <https://example.org/future-coach/kg/anatomy/> .
+@prefix fcc:  <https://example.org/future-coach/kg/condition/> .
+@prefix fcr:  <https://example.org/future-coach/kg/rule/> .
+@prefix fcl:  <https://example.org/future-coach/kg/load/> .
+@prefix fcm:  <https://example.org/future-coach/kg/muscle/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sct:  <http://snomed.info/id/> .
+
+fcc:pfp a fc:Condition ; fc:affects fca:patellofemoral-joint ; skos:exactMatch sct:430725003 ;
+    skos:prefLabel "patellofemoral pain" ;
+    skos:altLabel "patellofemoral pain syndrome", "PFPS", "PFP", "runner's knee", "kneecap pain" .
+fcc:lbp a fc:Condition ; fc:affects fca:lumbar-spine ; skos:exactMatch sct:279039007 ;
+    skos:prefLabel "low back pain" ;
+    skos:altLabel "nonspecific low back pain", "lower back pain", "bad lower back", "bad back", "back pain", "LBP" .
+fcc:rc-tendinopathy a fc:Condition ; fc:affects fca:rotator-cuff ; skos:exactMatch sct:414033006 ;
+    skos:prefLabel "rotator cuff tendinopathy" ;
+    skos:altLabel "rotator cuff", "rotator cuff pain", "shoulder impingement", "cuff tendinopathy" .
+fcc:unspecified-complaint a fc:Condition ; skos:prefLabel "unspecified complaint" ;
+    skos:definition "A body-area complaint with no diagnosis (e.g. 'her knee is bothering her'). Has no explicit rules, so the stage defaults apply: treated as acute and fails closed." .
+
+fc:acute skos:prefLabel "acute" . fc:recovering skos:prefLabel "recovering" . fc:cleared skos:prefLabel "cleared" .
+fc:anyStage skos:prefLabel "any stage" .
+fc:exclude fc:severity 3 . fc:downrank fc:severity 2 . fc:allow fc:severity 1 . fc:uprank fc:severity 0 .
+
+# --- patellofemoral pain ---------------------------------------------------
+fcr:pfp-shallow-acute a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:loaded_shallow_flexion ; fc:stage fc:acute ;
+    fc:tier fc:allow ; fc:cue "Keep the range pain-tolerable." ;
+    fc:source "Willy 2019 JOSPT CPG; Powers 2014" ; fc:confidence "guideline-stated (exercise) / practice-consensus (range)" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-shallow-recovering a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:loaded_shallow_flexion ; fc:stage fc:recovering ;
+    fc:tier fc:allow ; fc:cue "Keep the range pain-tolerable." ;
+    fc:source "Willy 2019 JOSPT CPG" ; fc:confidence "guideline-stated" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-deep-acute a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:loaded_deep_flexion ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Limit depth to about 45 degrees, e.g. box squat to a high box." ;
+    fc:source "Powers 2014" ; fc:confidence "practice-consensus" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-deep-recovering a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:loaded_deep_flexion ; fc:stage fc:recovering ;
+    fc:tier fc:downrank ; fc:cue "Progress depth gradually while pain stays tolerable." ;
+    fc:source "Willy 2019 (via AAFP summary)" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-terminal-acute a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:open_chain_terminal ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Limit knee extension to about 90 to 45 degrees." ;
+    fc:source "Powers 2014" ; fc:confidence "practice-consensus" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-midrange-any a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:open_chain_midrange ; fc:stage fc:anyStage ;
+    fc:tier fc:allow ; fc:source "Willy 2019; Powers 2014" ; fc:confidence "guideline-stated / practice-consensus" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-impact-acute a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:impact ; fc:stage fc:acute ;
+    fc:tier fc:exclude ; fc:source "Willy 2019 (relative rest)" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-impact-recovering a fc:Rule ; fc:condition fcc:pfp ; fc:loadType fcl:impact ; fc:stage fc:recovering ;
+    fc:tier fc:downrank ; fc:cue "Low volume only." ;
+    fc:source "Willy 2019 (load management)" ; fc:confidence "our-inference (tier)" ; fc:reviewStatus "unreviewed" .
+fcr:pfp-hip-uprank a fc:Rule ; fc:condition fcc:pfp ; fc:targetsMuscle fcm:glutes ; fc:stage fc:anyStage ;
+    fc:tier fc:uprank ; fc:source "Willy 2019; Crossley 2016 (hip-targeted exercise, Grade A)" ;
+    fc:confidence "guideline-stated" ; fc:reviewStatus "unreviewed" .
+
+# --- low back pain -----------------------------------------------------------
+fcr:lbp-bracing-uprank a fc:Rule ; fc:condition fcc:lbp ; fc:loadType fcl:isometric_bracing ; fc:stage fc:anyStage ;
+    fc:tier fc:uprank ; fc:source "George 2021 JOSPT CPG (trunk activation, Grade A chronic)" ; fc:confidence "guideline-stated" ; fc:reviewStatus "unreviewed" .
+fcr:lbp-axial-acute a fc:Rule ; fc:condition fcc:lbp ; fc:loadType fcl:axial_compression ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Reduce load; choose a supported or goblet variation." ;
+    fc:source "none" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:lbp-flexion-acute a fc:Rule ; fc:condition fcc:lbp ; fc:loadType fcl:loaded_flexion ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Lighten the load or use an elevated hinge." ;
+    fc:source "George 2021; NICE NG59 (stay active)" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:lbp-rotation-acute a fc:Rule ; fc:condition fcc:lbp ; fc:loadType fcl:loaded_rotation ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Swap to an anti-rotation exercise." ;
+    fc:source "none" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:lbp-any-recovering a fc:Rule ; fc:condition fcc:lbp ; fc:loadType fc:anyLoad ; fc:stage fc:recovering ;
+    fc:tier fc:allow ; fc:source "George 2021; NICE NG59" ; fc:confidence "guideline-stated" ; fc:reviewStatus "unreviewed" .
+
+# --- rotator cuff tendinopathy ------------------------------------------------
+fcr:rc-rotation-uprank a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:rotation_neutral ; fc:stage fc:anyStage ;
+    fc:tier fc:uprank ; fc:source "Lewis 2016; Desmeules 2025" ; fc:confidence "practice-consensus / guideline-stated" ; fc:reviewStatus "unreviewed" .
+fcr:rc-overhead-acute a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:loaded_overhead ; fc:stage fc:acute ;
+    fc:tier fc:downrank ; fc:cue "Short lever, below shoulder height; isometrics if irritable." ;
+    fc:source "Lewis 2016" ; fc:confidence "practice-consensus" ; fc:reviewStatus "unreviewed" .
+fcr:rc-overhead-recovering a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:loaded_overhead ; fc:stage fc:recovering ;
+    fc:tier fc:downrank ; fc:cue "Progress lever, then range, then load, one change at a time." ;
+    fc:source "Lewis 2016" ; fc:confidence "practice-consensus" ; fc:reviewStatus "unreviewed" .
+fcr:rc-endrange-acute a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:end_range_under_load ; fc:stage fc:acute ;
+    fc:tier fc:exclude ; fc:source "none" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:rc-endrange-recovering a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:end_range_under_load ; fc:stage fc:recovering ;
+    fc:tier fc:downrank ; fc:cue "Shorten the range." ; fc:source "none" ; fc:confidence "our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:rc-push-any a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:horizontal_push ; fc:stage fc:anyStage ;
+    fc:tier fc:allow ; fc:cue "Keep pain tolerable." ; fc:source "Desmeules 2025" ; fc:confidence "guideline-stated / our-inference" ; fc:reviewStatus "unreviewed" .
+fcr:rc-pull-any a fc:Rule ; fc:condition fcc:rc-tendinopathy ; fc:loadType fcl:horizontal_pull ; fc:stage fc:anyStage ;
+    fc:tier fc:allow ; fc:cue "Keep pain tolerable." ; fc:source "Desmeules 2025" ; fc:confidence "guideline-stated / our-inference" ; fc:reviewStatus "unreviewed" .

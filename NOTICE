@@ -1,0 +1,19 @@
+SNOMED CT
+---------
+This repository references SNOMED CT concepts by bare concept identifier only
+(e.g. http://snomed.info/id/430725003), attached to our own labels via
+skos:exactMatch. It contains no SNOMED CT descriptions, relationships or
+release files. SNOMED CT is a registered trademark of SNOMED International.
+Use of SNOMED CT content requires a licence (in the US, via the NLM UMLS
+Metathesaurus License). The app shows its own labels next to each code.
+Edition referenced: SNOMED CT US 2026_03_01.
+
+Clinical rules
+--------------
+The contraindication rules in backend/kg/conditions.ttl are derived from
+published guidelines and are marked review_status "unreviewed". They are not
+medical advice and require clinician sign-off before any real use.
+
+Data
+----
+All member data in this repository is synthetic.

@@ -1,0 +1,50 @@
+# Coach vocabulary for the resolver (D8): SKOS labels that map everyday words
+# onto graph concepts. prefLabel = canonical, altLabel = synonym/slang,
+# hiddenLabel = common misspelling (matched, never displayed).
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fcm:  <https://example.org/future-coach/kg/muscle/> .
+@prefix fcp:  <https://example.org/future-coach/kg/pattern/> .
+@prefix fcg:  <https://example.org/future-coach/kg/region/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# --- muscles (catalog muscle_groups) ----------------------------------------
+fcm:chest       a fc:Muscle ; skos:altLabel "pecs", "pec", "pectorals", "chest muscles" ; skos:hiddenLabel "pecks" .
+fcm:quads       a fc:Muscle ; skos:altLabel "quadriceps", "quad", "thighs", "front of the thigh" ; skos:hiddenLabel "quadracepts", "quadraceps" .
+fcm:glutes      a fc:Muscle ; skos:altLabel "glute", "butt", "bum", "gluteus", "glutes and hips" ; skos:hiddenLabel "gluts" .
+fcm:hamstrings  a fc:Muscle ; skos:altLabel "hamstring", "hammies", "back of the thigh" ; skos:hiddenLabel "hamstings" .
+fcm:calves      a fc:Muscle ; skos:altLabel "calf", "calfs" .
+fcm:biceps      a fc:Muscle ; skos:altLabel "bicep", "bis", "guns" .
+fcm:triceps     a fc:Muscle ; skos:altLabel "tricep", "tris" .
+fcm:deltoids    a fc:Muscle ; skos:altLabel "delts", "delt", "shoulder muscles" .
+fcm:lats        a fc:Muscle ; skos:altLabel "lat", "latissimus" .
+fcm:traps       a fc:Muscle ; skos:altLabel "trap", "trapezius" .
+fcm:core        a fc:Muscle ; skos:altLabel "abs", "abdominals", "midsection", "stomach" .
+fcm:obliques    a fc:Muscle ; skos:altLabel "oblique", "side abs", "love handles" .
+fcm:forearms    a fc:Muscle ; skos:altLabel "forearm", "grip" .
+fcm:hip-adductors a fc:Muscle ; skos:altLabel "adductors", "inner thigh", "groin" .
+fcm:hip-flexors a fc:Muscle ; skos:altLabel "hip flexor" .
+fcm:middle-back a fc:Muscle ; skos:altLabel "mid back muscles", "rhomboids" .
+fcm:upper-back  a fc:Muscle .
+fcm:lower-back  a fc:Muscle .
+fcm:rotator-cuff a fc:Muscle .
+
+# --- body regions (targets like "lower body") --------------------------------
+fcg:lower-body a fc:BodyRegion ; skos:prefLabel "lower body" ; skos:altLabel "legs", "leg day", "lower-body" ;
+    fc:includesPattern fcp:lower-push-squat, fcp:lower-push-squat-box-partial, fcp:lower-push-lunge, fcp:lower-push-split-squat,
+        fcp:lower-push-step-up, fcp:lower-push-calf-raise, fcp:lower-pull-hip-lift, fcp:lower-pull-hinge,
+        fcp:lower-abduction, fcp:lower-adduction, fcp:legs-accessory .
+fcg:upper-body a fc:BodyRegion ; skos:prefLabel "upper body" ; skos:altLabel "upper-body", "arms and shoulders" ;
+    fc:includesPattern fcp:upper-push-horizontal, fcp:upper-push-vertical, fcp:upper-pull-horizontal, fcp:upper-pull-vertical,
+        fcp:upper-adduction, fcp:shoulders-accessory, fcp:arms-accessory .
+fcg:core-region a fc:BodyRegion ; skos:prefLabel "core work" ; skos:altLabel "core training", "trunk" ;
+    fc:includesPattern fcp:core-anti-extension, fcp:core-anti-rotation, fcp:core-anti-lateral-flexion, fcp:core-carry,
+        fcp:core-extension, fcp:core-flexion, fcp:core-rotation .
+fcg:full-body a fc:BodyRegion ; skos:prefLabel "full body" ; skos:altLabel "full-body", "total body", "whole body" .
+fcg:conditioning a fc:BodyRegion ; skos:prefLabel "conditioning" ; skos:altLabel "cardio", "metcon", "endurance" ;
+    fc:includesPattern fcp:cardio, fcp:cardio-locomotion, fcp:cardio-plyometric .
+fcg:mobility a fc:BodyRegion ; skos:prefLabel "mobility" ; skos:altLabel "stretching", "recovery", "flexibility" ;
+    fc:includesPattern fcp:mobility-dynamic, fcp:mobility-static, fcp:yoga, fcp:regen, fcp:massage .
+fcg:push a fc:BodyRegion ; skos:prefLabel "push" ; skos:altLabel "push day", "pushing", "presses" ;
+    fc:includesPattern fcp:upper-push-horizontal, fcp:upper-push-vertical .
+fcg:pull a fc:BodyRegion ; skos:prefLabel "pull" ; skos:altLabel "pull day", "pulling", "rows" ;
+    fc:includesPattern fcp:upper-pull-horizontal, fcp:upper-pull-vertical .

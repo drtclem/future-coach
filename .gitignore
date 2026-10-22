@@ -1,0 +1,20 @@
+# secrets and local env
+.env
+*.pem
+*_token*
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+# node
+node_modules/
+frontend/dist/
+# runtime data (graph store, traces)
+var/
+*.log
+.DS_Store
+*.egg-info/
+evals/results/
+.deploy_key

@@ -1,0 +1,9 @@
+# Exercise-level load overrides, used only where pattern-derived loads are
+# wrong for a specific exercise. Each needs a one-line reason.
+@prefix fc:   <https://example.org/future-coach/kg#> .
+@prefix fcx:  <https://example.org/future-coach/kg/exercise/> .
+@prefix fca:  <https://example.org/future-coach/kg/anatomy/> .
+@prefix fcl:  <https://example.org/future-coach/kg/load/> .
+
+# Half-kneeling: the down knee rests on the floor, it is not loaded.
+fcx:syn-half-kneeling-db-press fc:loadOverride [ fc:structure fca:knee ; fc:loadType fcl:contact_only ] .

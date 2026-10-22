@@ -1,0 +1,37 @@
+[project]
+name = "future-coach"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.30",
+  "pydantic>=2.7",
+  "pyoxigraph>=0.5.11",
+  "rapidfuzz>=3.9",
+  "fastembed>=0.5",  # resolver embedding pass (local ONNX, no key)
+  "litellm>=1.105",
+  "json-repair>=0.30",  # lenient parse of malformed model JSON (llm.py)
+  "langfuse==4.15.6",  # same version as the clinical-copilot observability module
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6", "pre-commit>=3.7"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]  # the formatter owns line length; long SPARQL strings are clearer unwrapped
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
